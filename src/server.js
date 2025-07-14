@@ -12,7 +12,6 @@ const app = express();
 const PORT = 3000;
 app.use(express.json());
 
-// 1. Última cotação de um ativo
 app.get('/api/ativos/:codigo/cotacao', async (req, res) => {
   const { codigo } = req.params;
   const cotacao = await buscarCotacaoAtual(codigo);
@@ -20,7 +19,6 @@ app.get('/api/ativos/:codigo/cotacao', async (req, res) => {
   res.json({ ativo: cotacao.codigo, preco: cotacao.preco, data: cotacao.horario });
 });
 
-// 2. Preço médio por ativo para um usuário
 app.get('/api/usuarios/:id/preco-medio/:codigo', async (req, res) => {
   const { id, codigo } = req.params;
   const [rows] = await db.query(`
@@ -39,7 +37,6 @@ app.get('/api/usuarios/:id/preco-medio/:codigo', async (req, res) => {
   }
 });
 
-// 3. Posição do cliente
 app.get('/api/usuarios/:id/posicao', async (req, res) => {
   const { id } = req.params;
   const [rows] = await db.query(`
@@ -52,7 +49,6 @@ app.get('/api/usuarios/:id/posicao', async (req, res) => {
   res.json(rows);
 });
 
-// 4. Total financeiro ganho com corretagens
 app.get('/api/corretagens/total', async (req, res) => {
   const [rows] = await db.query(`
     SELECT SUM(corretagem) AS total_corretagem
@@ -61,7 +57,6 @@ app.get('/api/corretagens/total', async (req, res) => {
   res.json(rows[0]);
 });
 
-// 5. Top 10 clientes com maiores posições
 app.get('/api/usuarios/top-posicao', async (req, res) => {
   const [rows] = await db.query(`
     SELECT u.id AS usuario_id, u.nome, SUM(p.quantidade * p.preco_medio) AS valor_total
@@ -74,7 +69,6 @@ app.get('/api/usuarios/top-posicao', async (req, res) => {
   res.json(rows);
 });
 
-// 6. Top 10 clientes que mais pagaram corretagem
 app.get('/api/usuarios/top-corretagem', async (req, res) => {
   const [rows] = await db.query(`
     SELECT u.id AS usuario_id, u.nome, SUM(o.corretagem) AS total_corretagem
@@ -87,7 +81,6 @@ app.get('/api/usuarios/top-corretagem', async (req, res) => {
   res.json(rows);
 });
 
-// Teste básico
 app.get('/api/ping', (req, res) => {
   res.json({ status: 'ok' });
 });
