@@ -2,7 +2,7 @@ const db = require('../db');
 const { buscarCotacaoAtual } = require('./cotacaoservice');
 
 /**
- * Consulta a cotação atual de um ativo na API pública e salva no banco MySQL.
+ * isso consulta de um ativo na API pública e salva no banco MySQL.
  * @param {string} codigoAtivo Ex: 'ITSA4'
  */
 async function salvarCotacao(codigoAtivo) {
