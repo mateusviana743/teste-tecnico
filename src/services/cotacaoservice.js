@@ -11,8 +11,7 @@ async function buscarCotacaoAtual(codigoAtivo) {
     }
 
     const data = await response.json();
-
-    // Testa se veio o valor correto
+    
     if (!data || !data.price) {
       console.error('Resposta da API inválida:', data);
       return null;
